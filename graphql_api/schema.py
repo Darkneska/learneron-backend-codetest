@@ -18,7 +18,8 @@ class ActorType(DjangoObjectType):
 class Query(graphene.ObjectType):
     movies = graphene.List(MovieType)
 
-    def resolve_movies(root, info):
+    def resolve_movies(root, info, **kwargs):
+        # Here should be a year range filter
         return Movie.objects.all()
 
 
