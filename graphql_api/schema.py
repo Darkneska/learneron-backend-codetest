@@ -44,7 +44,7 @@ class CreateActor(graphene.Mutation):
 
 
 class MovieInput(graphene.InputObjectType):
-    id = graphene.ID
+    id = graphene.ID()
     name = graphene.String()
     year = graphene.String()
 
@@ -53,7 +53,7 @@ class CreateMovie(graphene.Mutation):
     class Arguments:
         movie_data = MovieInput(required=True)
 
-    movie = graphene.Field(ActorType)
+    movie = graphene.Field(MovieType)
 
     @staticmethod
     def mutate(root, info, movie_data=None):
