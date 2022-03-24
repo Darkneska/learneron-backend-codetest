@@ -1,5 +1,5 @@
 import graphene
-from graphene_django import DjangoObjectType
+from graphene_django import DjangoObjectType, filter
 from .models import Movie, Actor
 
 
@@ -18,9 +18,8 @@ class ActorType(DjangoObjectType):
 class Query(graphene.ObjectType):
     movies = graphene.List(MovieType)
 
-    def resolve_movies(root, info, **kwargs):
-        # Here should be a year range filter
-        return Movie.objects.all()
+    def resolve_movies(root, info):
+        return Movie.objects.filter(year__range=(1993, 2021))
 
 
 class ActorInput(graphene.InputObjectType):
@@ -47,7 +46,7 @@ class CreateActor(graphene.Mutation):
 class MovieInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String()
-    year = graphene.String()
+    year = graphene.Int()
 
 
 class CreateMovie(graphene.Mutation):
